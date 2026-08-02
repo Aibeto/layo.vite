@@ -19,8 +19,8 @@
   --ak-light-blue: #3ff7ff;
   --ak-gray: #313131;
   --ak-dark: #222;
-  --ak-font-serif: "Noto Serif SC", "Noto Serif", serif;
-  --ak-font-sans: "Noto Sans SC", "Noto Sans", Roboto, Arial, sans-serif;
+  --ak-font-serif: "Rajdhani", "Noto Serif SC", "Noto Serif", "Songti SC", "STSong", "SimSun", serif;
+  --ak-font-sans: "Rajdhani", "Noto Sans SC", "Noto Sans", Roboto, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
 
   /* 辉光/描边变量（CDN keyframes 默认白色，在亮色主题下不可见，故改为 ak 蓝系） */
   --ak-fx-glow-color: var(--ak-blue);
@@ -63,6 +63,9 @@
 
   --vp-nav-bg-color: rgba(247, 249, 252, 0.72);
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
+
+  /* 全站工业网格纹理颜色（方舟风背景） */
+  --vp-c-grid: rgba(30, 36, 48, 0.055);
 }
 
 /**
@@ -98,6 +101,9 @@
 
   --vp-nav-bg-color: rgba(22, 24, 30, 0.72);
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
+
+  /* 全站工业网格纹理颜色（方舟风背景，暗色） */
+  --vp-c-grid: rgba(255, 255, 255, 0.04);
 }
 
 /**
@@ -212,11 +218,23 @@
  * -------------------------------------------------------------------------- */
 
 body {
+  /* 全局字重上调，贴近明日方舟粗黑风格 */
+  font-weight: 450;
   background-image:
+    /* 方舟工业网格纹理 */
+    linear-gradient(var(--vp-c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vp-c-grid) 1px, transparent 1px),
     radial-gradient(1100px 560px at 10% -12%, var(--vp-c-brand-soft), transparent 62%),
     radial-gradient(900px 520px at 104% 12%, rgba(255, 216, 2, 0.05), transparent 55%),
     linear-gradient(180deg, var(--vp-c-bg-alt), var(--vp-c-bg));
+  background-size: 44px 44px, 44px 44px, auto, auto, auto;
   background-attachment: fixed;
+}
+
+/* 文本选中：ak 深蓝底白字（方舟界面风格） */
+::selection {
+  background-color: var(--ak-dark-blue);
+  color: #fff;
 }
 
 /* 顶部蓝色渐变辉光线（ak 蓝系 + 辉光呼吸） */
@@ -253,15 +271,54 @@ body {
  * 组件细节
  * -------------------------------------------------------------------------- */
 
+/* 特性卡片：顶部斜切蓝条（方舟材料卡风格） */
+.VPFeature {
+  position: relative;
+}
+
+.VPFeature::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-light-blue));
+  transform: skewX(-20deg);
+  transform-origin: left top;
+}
+
 /* 特性卡片悬停发光 */
 .VPFeature:hover {
   box-shadow: 0 0 26px rgba(34, 187, 255, 0.25) !important;
 }
 
-/* 导航菜单链接悬停（ak 蓝系，经 --vp-c-brand-1 明/暗映射） */
+/* 导航菜单链接：ak 蓝 + 底部斜切指示条 */
+.VPNavBarMenuLink {
+  position: relative;
+}
+
+.VPNavBarMenuLink::after {
+  content: "";
+  position: absolute;
+  left: 0.6em;
+  right: 0.6em;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-light-blue));
+  transform: skewX(-30deg);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
 .VPNavBarMenuLink:hover,
 .VPNavBarMenuLink.active {
   color: var(--vp-c-brand-1) !important;
+}
+
+.VPNavBarMenuLink:hover::after,
+.VPNavBarMenuLink.active::after {
+  opacity: 1;
 }
 
 /* 侧边栏激活项指示条（ak 蓝） */
@@ -335,6 +392,40 @@ body {
   letter-spacing: 0.01em;
 }
 
+/* 文档 h2/h3 左侧斜切蓝条装饰（方舟风） */
+.vp-doc h2 {
+  position: relative;
+  padding-left: 0.7em;
+}
+
+.vp-doc h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.22em;
+  bottom: 0.22em;
+  width: 4px;
+  background: linear-gradient(180deg, var(--ak-dark-blue), var(--ak-light-blue));
+  transform: skewX(-15deg);
+}
+
+.vp-doc h3 {
+  position: relative;
+  padding-left: 0.55em;
+}
+
+.vp-doc h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  bottom: 0.3em;
+  width: 3px;
+  background: var(--ak-blue);
+  opacity: 0.6;
+  transform: skewX(-15deg);
+}
+
 /* 页面滚动条（ak 灰蓝工业风） */
 ::-webkit-scrollbar {
   width: 10px;
@@ -380,7 +471,7 @@ body {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   outline: 0;
   border: none !important;
   font-size: 1rem !important;
@@ -439,7 +530,7 @@ body {
 /* 对应 .ak-button--outline（VPButton.alt 替换；CDN 无 hover/active 变色，固色对齐） */
 .VPButton.alt {
   border: 2px solid #fff !important;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
@@ -459,7 +550,7 @@ body {
 /* 对应 .ak-button__label */
 .button__label {
   display: inline-flex;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   line-height: 1;
 }
 
@@ -494,7 +585,7 @@ body {
 /* 对应 .ak-button--outline */
 .button--outline {
   border: 2px solid #fff;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
 }
 
@@ -540,7 +631,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  font-family: Noto Serif SC, serif;
+  font-family: var(--ak-font-serif);
   font-size: 2.8rem;
   font-weight: 900;
 }
@@ -801,7 +892,7 @@ body {
   height: 30px;
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   display: flex;
   align-items: center;
   font-size: 1.2rem;
@@ -825,7 +916,7 @@ body {
 .button-group .button {
   color: #000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   font-size: x-large;
 }
 
@@ -877,7 +968,7 @@ body {
 
 /* 对应 .ak-button-group--action .button-group .ak-button__label */
 .button-group--action .button-group .button__label {
-  font-family: Noto Serif SC, serif;
+  font-family: var(--ak-font-serif);
   font-size: 1.8rem;
   font-weight: 900;
 }
@@ -912,7 +1003,7 @@ body {
 /* 对应 .ak-button-group--total .left .ak-button__label */
 .button-group--total .left .button__label {
   padding-top: 1.8rem;
-  font-family: Noto Serif SC, serif;
+  font-family: var(--ak-font-serif);
   font-size: 2.5rem;
   font-weight: 900;
 }
@@ -941,7 +1032,7 @@ body {
 
 /* 对应 .ak-counter__content */
 .counter__content {
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   font-size: 1.8rem;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
   margin-left: 0.4rem;
@@ -967,7 +1058,7 @@ body {
   display: inline-block;
   width: 120px;
   text-align: center;
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
 
@@ -1203,12 +1294,12 @@ body {
 
 /* 对应 .ak-font-serif */
 .font-serif {
-  font-family: Noto Serif SC, serif;
+  font-family: var(--ak-font-serif);
 }
 
 /* 对应 .ak-font-sans-serif */
 .font-sans-serif {
-  font-family: Noto Sans SC, Roboto, Arial, sans-serif;
+  font-family: var(--ak-font-sans);
 }
 
 /* ============================ ak-text--title → title ============================ */
