@@ -151,20 +151,17 @@
   }
 }
 
-/* 放宽首页 Hero 标题的宽度限制，避免长标题被截断换行 */
+/* Hero 标题：放宽宽度限制、加粗（对应 .ak-text--title）、光晕呼吸动画 */
 .VPHero .name {
   max-width: 700px !important;
+  font-weight: 900 !important;
+  animation: ak-hero-glow 2s ease-in-out infinite alternate;
 }
 
 @media (min-width: 640px) {
   .VPHero .name {
     max-width: 800px !important;
   }
-}
-
-/* Hero 标题光晕呼吸动画 */
-.VPHero .name {
-  animation: ak-hero-glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes ak-hero-glow {
@@ -1309,9 +1306,4 @@ body {
 .text-title {
   font-weight: 900;
   font-size: 3rem;
-}
-
-/* 对应 .ak-text--title（仅取 font-weight，尺寸保留 VitePress 响应式） */
-.VPHero .name {
-  font-weight: 900 !important;
 }

@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "RAINCRAT:LAYOSERVE"
   text: "雨绘巷：泠域存储"
-  tagline: "何意味？"
+  tagline: "吾往疯四久矣，速五十于微信。"
   actions:
     - theme: brand
       text: 查看blogs
