@@ -25,9 +25,10 @@
   seo.js           # SEO/GEO 工具模块：URL 派生、页面 head 注入、robots/llms 生成
   seo-config.js    # SEO 独立配置：所有 SEO 变量集中于此，默认沿用 config.js 的值
   theme/
-    index.js       # 主题入口（唯一生效的入口，extends DefaultTheme）
+    index.js       # 主题入口（唯一生效的入口，extends DefaultTheme，Layout 插槽注入导航栏按钮）
     style.css      # 全局样式与 ak-ui 组件替换（保留双份规则）
     cookie-consent.js # 第三方 Cookie 同意管理器（vanilla-cookieconsent）+ Clarity 同意同步
+    CookieConsentButton.vue # 导航栏右上角手动弹出 Cookie 偏好设置的按钮（theme/index.js 的 Layout 插槽引入）
 index.md           # 首页（hero + features）
 docs/              # 文档页
 .env               # 站点配置唯一来源：VITE_SITE_*（站点基础）+ VITE_SEO_*（SEO 独立覆盖）

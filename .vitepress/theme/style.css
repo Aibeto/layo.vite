@@ -97,10 +97,10 @@
   --vp-c-brand-darker: #00547a;
   --vp-c-brand-dimm: rgba(63, 247, 255, 0.08);
 
-  --vp-c-bg: #0d0e12;
+  --vp-c-bg: #030303;
   --vp-c-bg-soft: #1e2129;
   --vp-c-bg-mute: #20242d;
-  --vp-c-bg-alt: #0d0e12;
+  --vp-c-bg-alt: #030303;
   --vp-c-bg-elv: #1e2129;
   --vp-c-text-1: #edf1f7;
   --vp-c-text-2: #aeb8c6;
@@ -250,18 +250,33 @@
  * 全站背景：深色工业风底 + 双向微光晕
  * -------------------------------------------------------------------------- */
 
+html {
+  /* 越界回弹（overscroll）会把内容整体下拉/横移、只露出根元素底色，导致网格/辉光在边缘穿帮。
+   * 1) overscroll-behavior: none 直接禁止四向回弹露底（Chrome/Edge/Firefox/Safari 16+）；
+   * 2) 根元素补齐同锚点网格 + 底色作为兜底，老版 iOS Safari 回弹时露出的区域也能无缝延续。 */
+  overscroll-behavior: none;
+  background-color: var(--vp-c-bg);
+  background-image:
+    linear-gradient(var(--vp-c-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vp-c-grid) 1px, transparent 1px),
+    linear-gradient(180deg, var(--vp-c-bg-alt), var(--vp-c-bg));
+  background-size: 44px 44px, 44px 44px, auto;
+}
+
 body {
+  overscroll-behavior: none;
   /* 全局字重上调，贴近明日方舟粗黑风格 */
   font-weight: 450;
   background-image:
-    /* 方舟工业网格纹理 */
+    /* 方舟工业网格纹理（scroll：与 html 网格同锚点，回弹时边缘无缝衔接） */
     linear-gradient(var(--vp-c-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--vp-c-grid) 1px, transparent 1px),
     radial-gradient(1100px 560px at 10% -12%, var(--vp-c-brand-soft), transparent 62%),
     radial-gradient(900px 520px at 104% 12%, rgba(255, 216, 2, 0.05), transparent 55%),
     linear-gradient(180deg, var(--vp-c-bg-alt), var(--vp-c-bg));
   background-size: 44px 44px, 44px 44px, auto, auto, auto;
-  background-attachment: fixed;
+  /* 网格随文档滚动（与 html 对齐），辉光与底色固定在视口 */
+  background-attachment: scroll, scroll, fixed, fixed, fixed;
 }
 
 /* 文本选中：ak 深蓝底白字（方舟界面风格） */
@@ -1353,4 +1368,186 @@ body {
 .text-title {
   font-weight: 900;
   font-size: 3rem;
+}
+
+/**
+ * Component: Cookie Consent（明日方舟化）
+ * 覆盖 vanilla-cookieconsent v3 的 --cc-* 变量与局部样式，实现方舟直角/辉光/衬线风。
+ * 亮暗双主题跟随 VitePress 的 .dark（html 上的类），压过 cookieconsent 自身的 darkmode 检测。
+ * -------------------------------------------------------------------------- */
+
+#cc-main {
+  --cc-font-family: var(--ak-font-sans);
+  --cc-modal-border-radius: 0;
+  --cc-btn-border-radius: 0;
+  --cc-pm-toggle-border-radius: 0;
+
+  --cc-bg: var(--vp-c-bg-elv);
+  --cc-primary-color: var(--vp-c-text-1);
+  --cc-secondary-color: var(--vp-c-text-2);
+
+  --cc-btn-primary-bg: var(--vp-c-brand-1);
+  --cc-btn-primary-color: var(--vp-c-white);
+  --cc-btn-primary-border-color: var(--vp-c-brand-2);
+  --cc-btn-primary-hover-bg: var(--vp-c-brand-2);
+  --cc-btn-primary-hover-color: var(--vp-c-white);
+  --cc-btn-primary-hover-border-color: var(--vp-c-brand-3);
+
+  --cc-btn-secondary-bg: var(--vp-c-bg-soft);
+  --cc-btn-secondary-color: var(--vp-c-text-1);
+  --cc-btn-secondary-border-color: var(--vp-c-border);
+  --cc-btn-secondary-hover-bg: var(--vp-c-bg-mute);
+  --cc-btn-secondary-hover-color: var(--vp-c-text-1);
+  --cc-btn-secondary-hover-border-color: var(--vp-c-divider);
+
+  --cc-separator-border-color: var(--vp-c-divider);
+  --cc-section-category-border: var(--vp-c-divider);
+  --cc-cookie-category-block-bg: var(--vp-c-bg-soft);
+  --cc-cookie-category-block-border: var(--vp-c-divider);
+  --cc-cookie-category-block-hover-bg: var(--vp-c-bg-mute);
+  --cc-cookie-category-block-hover-border: var(--vp-c-divider);
+  --cc-cookie-category-expanded-block-bg: var(--vp-c-bg-soft);
+  --cc-cookie-category-expanded-block-hover-bg: var(--vp-c-bg-mute);
+
+  --cc-toggle-on-bg: var(--vp-c-brand-1);
+  --cc-toggle-off-bg: var(--vp-c-text-4);
+  --cc-toggle-on-knob-bg: var(--vp-c-bg-elv);
+  --cc-toggle-off-knob-bg: var(--vp-c-bg-elv);
+  --cc-toggle-enabled-icon-color: var(--vp-c-bg-elv);
+  --cc-toggle-disabled-icon-color: var(--vp-c-bg-elv);
+  --cc-toggle-readonly-bg: var(--vp-c-bg-mute);
+  --cc-toggle-readonly-knob-bg: var(--vp-c-bg-elv);
+  --cc-toggle-readonly-knob-icon-color: var(--vp-c-bg-mute);
+
+  --cc-overlay-bg: rgba(0, 0, 0, 0.55);
+  --cc-webkit-scrollbar-bg: var(--vp-c-divider);
+  --cc-webkit-scrollbar-hover-bg: var(--ak-blue);
+  --cc-footer-bg: var(--vp-c-bg-soft);
+  --cc-footer-color: var(--vp-c-text-2);
+  --cc-footer-border-color: var(--vp-c-divider);
+}
+
+.dark #cc-main {
+  --cc-bg: var(--vp-c-bg-elv);
+  --cc-primary-color: var(--vp-c-text-1);
+  --cc-secondary-color: var(--vp-c-text-2);
+
+  --cc-btn-primary-bg: var(--vp-c-brand-1);
+  --cc-btn-primary-color: var(--vp-c-bg);
+  --cc-btn-primary-border-color: var(--vp-c-brand-2);
+  --cc-btn-primary-hover-bg: var(--vp-c-brand-2);
+  --cc-btn-primary-hover-color: var(--vp-c-bg);
+  --cc-btn-primary-hover-border-color: var(--vp-c-brand-3);
+
+  --cc-btn-secondary-bg: var(--vp-c-bg-soft);
+  --cc-btn-secondary-color: var(--vp-c-text-1);
+  --cc-btn-secondary-border-color: var(--vp-c-border);
+  --cc-btn-secondary-hover-bg: var(--vp-c-bg-mute);
+  --cc-btn-secondary-hover-color: var(--vp-c-text-1);
+  --cc-btn-secondary-hover-border-color: var(--vp-c-divider);
+
+  --cc-separator-border-color: var(--vp-c-divider);
+  --cc-section-category-border: var(--vp-c-divider);
+  --cc-cookie-category-block-bg: var(--vp-c-bg-soft);
+  --cc-cookie-category-block-border: var(--vp-c-border);
+  --cc-cookie-category-block-hover-bg: var(--vp-c-bg-mute);
+  --cc-cookie-category-block-hover-border: var(--vp-c-divider);
+  --cc-cookie-category-expanded-block-bg: var(--vp-c-bg-soft);
+  --cc-cookie-category-expanded-block-hover-bg: var(--vp-c-bg-mute);
+
+  --cc-toggle-on-bg: var(--vp-c-brand-1);
+  --cc-toggle-off-bg: var(--vp-c-text-4);
+  --cc-toggle-on-knob-bg: var(--vp-c-bg);
+  --cc-toggle-off-knob-bg: var(--vp-c-bg);
+  --cc-toggle-enabled-icon-color: var(--vp-c-bg);
+  --cc-toggle-disabled-icon-color: var(--vp-c-bg);
+  --cc-toggle-readonly-bg: var(--vp-c-bg-mute);
+  --cc-toggle-readonly-knob-bg: var(--vp-c-bg-elv);
+  --cc-toggle-readonly-knob-icon-color: var(--vp-c-bg-mute);
+
+  --cc-overlay-bg: rgba(0, 0, 0, 0.72);
+  --cc-webkit-scrollbar-bg: var(--vp-c-divider);
+  --cc-webkit-scrollbar-hover-bg: var(--ak-blue);
+  --cc-footer-bg: var(--vp-c-bg-soft);
+  --cc-footer-color: var(--vp-c-text-2);
+  --cc-footer-border-color: var(--vp-c-divider);
+}
+
+/* 标题：衬线体 + 加粗（明日方舟界面风格） */
+#cc-main .cm__title,
+#cc-main .pm__title {
+  font-family: var(--ak-font-serif);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+/* 窗口容器：直角 + 蓝色辉光阴影（同特性卡片悬停发光） */
+#cc-main .cm,
+#cc-main .pm {
+  box-shadow: 0 0 18px var(--vp-c-shadow-brand), 0 8px 24px var(--vp-c-shadow);
+}
+
+/* 顶部 3px 蓝色渐变辉光线（同导航栏装饰） */
+#cc-main .cm::before,
+#cc-main .pm::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-blue) 45%, var(--ak-light-blue));
+  z-index: 3;
+}
+
+/* 按钮：加粗（直角已由 --cc-*-border-radius 归零） */
+#cc-main .cm__btn,
+#cc-main .pm__btn {
+  font-weight: 700;
+}
+
+/* 偏好分区展开条：左侧 3px 蓝边（同代码块左缘） */
+#cc-main .pm__section--toggle .pm__section-title {
+  border-left: 3px solid var(--ak-blue);
+}
+
+/* 分区描述行高微调 */
+#cc-main .pm__section-desc {
+  line-height: 1.6;
+}
+
+/**
+ * Component: Cookie Consent 手动按钮（导航栏右上角主题开关旁）
+ * 通过 flex order 稳定排序：appearance（主题开关）→ 本按钮 → social-links（GitHub）
+ * -------------------------------------------------------------------------- */
+
+.VPNavBar .content-body .social-links,
+.VPNavBar .content-body .extra {
+  order: 1;
+}
+
+.vp-cookie-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 8px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.vp-cookie-btn:hover {
+  border-color: var(--ak-blue);
+  color: var(--vp-c-brand-1);
+  box-shadow: 0 0 12px var(--vp-c-shadow-brand);
+}
+
+.vp-cookie-btn__icon {
+  width: 18px;
+  height: 18px;
 }
