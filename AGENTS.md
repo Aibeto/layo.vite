@@ -22,11 +22,13 @@
 ```
 .vitepress/
   config.js        # 站点配置（唯一生效的配置入口）
+  seo.js           # SEO/GEO 工具模块：URL 派生、页面 head 注入、robots/llms 生成
   theme/
     index.js       # 主题入口（唯一生效的入口，extends DefaultTheme）
     style.css      # 全局样式与 ak-ui 组件替换（保留双份规则）
 index.md           # 首页（hero + features）
 docs/              # 文档页
+.env               # VITE_SITE_URL 全站唯一域名来源（构建时派生 sitemap/canonical/OG 等）
 package.json
 ```
 
@@ -43,3 +45,4 @@ package.json
 9. 网络资源（如 ak-ui CDN CSS、Google 字体 Noto Sans/Serif SC）通过 `config.js` 的 `head` 配置注入。
 10. 每次完成任务后检查是否需要更新 `AGENTS.md`。
 11. **全站主题变量映射集中在 `style.css` 顶部**：`--ak-*` 调色板/字体变量 → `--vp-c-*`（明/暗双主题）、`--vp-button-*`、`--vp-home-hero-*`、`--vp-custom-block-*`。新增全站风格化时优先改变量映射，避免硬编码颜色；文档风格化（导航/侧边栏/代码块/表格/引用/滚动条）位于 style.css 的"组件细节"区块。
+12. **SEO/GEO 无硬链接**：域名唯一来源为 `.env` 的 `VITE_SITE_URL`；`sitemap.xml`、`robots.txt`、`llms.txt` 由 VitePress 内置 `sitemap` 配置与 `config.js` 的 `buildEnd` 钩子在构建时自动生成，页面级 canonical/OG/JSON-LD 由 `transformHead` 钩子注入（实现集中在 `.vitepress/seo.js`）。新增 SEO 逻辑一律在 `seo.js` 中实现，不要在页面里写死绝对地址。需要跳过 SEO 的页面在 `seo.js` 的 `SEO_EXCLUDE_PAGES` 中配置：`pages`（精确页）、`dirs`（目录前缀，整目录排除）、`patterns`（正则）。
