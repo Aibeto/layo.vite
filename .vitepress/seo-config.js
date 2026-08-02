@@ -24,9 +24,17 @@ export function createSeoConfig({ siteUrl, siteName, siteDescription, siteLang }
   return {
     // ---- 站点基础变量（默认沿用 config.js，即 .env 的 VITE_SITE_*）----
     siteUrl,
-    // SEO 站名可独立覆盖：VITE_SEO_SITE_NAME 未设置时回退到 VITE_SITE_NAME
-    siteName: VITE_SEO_SITE_NAME || siteName,
-    siteDescription: expandNewlines(VITE_SEO_SITE_DESCRIPTION || siteDescription),
+    // SEO 站名可独立覆盖：VITE_SEO_SITE_NAME 未设置或为空时回退到 VITE_SITE_NAME
+    siteName:
+      VITE_SEO_SITE_NAME !== undefined && VITE_SEO_SITE_NAME !== ''
+        ? VITE_SEO_SITE_NAME
+        : siteName,
+    // SEO 描述可独立覆盖：VITE_SEO_SITE_DESCRIPTION 未设置或为空时回退到 VITE_SITE_DESCRIPTION
+    // （回退值已在 config.js 经 expandNewlines 归一为真实换行，故此处仅对 SEO 覆盖值展开）
+    siteDescription:
+      VITE_SEO_SITE_DESCRIPTION !== undefined && VITE_SEO_SITE_DESCRIPTION !== ''
+        ? expandNewlines(VITE_SEO_SITE_DESCRIPTION)
+        : siteDescription,
     siteLang,
 
     // ---- SEO 独立变量（.env VITE_SEO_*，缺省回退）----
