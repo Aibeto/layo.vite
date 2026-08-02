@@ -1,18 +1,25 @@
 import { defineConfig, loadEnv } from 'vitepress';
 import { buildPageHeadTags, buildSeoArtifacts, transformSitemapItems } from './seo.js';
+import { createSeoConfig, expandNewlines } from './seo-config.js';
 
-// 站点 URL 唯一来源：.env 的 VITE_SITE_URL（不硬编码域名）
+// 站点配置唯一来源：.env（VITE_SITE_* 站点基础、VITE_SEO_* SEO 独立覆盖），代码不硬编码
 const env = loadEnv(process.env.NODE_ENV ?? 'production', process.cwd(), '');
-const siteUrl = (env.VITE_SITE_URL ?? '').replace(/\/+$/, '');
 
-const siteName = 'LAYOSERVE泠域存储 官方站点';
-const siteDescription = 'RAINCRAT雨绘巷·LAYOSERVE泠域存储\n网站正在开发中';
+const siteUrl = (env.VITE_SITE_URL ?? '').replace(/\/+$/, '');
+const siteName = env.VITE_SITE_NAME ?? '';
+// 描述类变量允许换行（\n 或真实换行），统一归一为真实换行
+const siteDescription = expandNewlines(env.VITE_SITE_DESCRIPTION ?? '');
+const siteLang = env.VITE_SITE_LANG ?? 'zh-CN';
+const themeColor = env.VITE_SITE_THEME_COLOR ?? '#0e86b8';
+
+// SEO 配置独立于 seo-config.js：默认沿用上面的站点基础配置，可被 VITE_SEO_* 覆盖
+const seo = createSeoConfig({ siteUrl, siteName, siteDescription, siteLang }, env);
 
 export default defineConfig({
   base: "/",
   title: siteName,
   description: siteDescription,
-  lang: "zh-CN",
+  lang: siteLang,
   cleanUrls: true,
   head: [
     [
@@ -29,13 +36,13 @@ export default defineConfig({
         href: 'https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@100..900&display=swap'
       }
     ],
-    // 全站静态 SEO meta
-    ['meta', { name: 'robots', content: 'index, follow' }],
-    ['meta', { name: 'author', content: 'LAYOSERVE' }],
-    ['meta', { property: 'og:site_name', content: siteName }],
-    ['meta', { property: 'og:locale', content: 'zh_CN' }],
-    ['meta', { name: 'twitter:card', content: 'summary' }],
-    ['meta', { name: 'theme-color', content: '#0e86b8' }],
+    // 全站静态 SEO meta（值统一取自 seo-config.js）
+    ['meta', { name: 'robots', content: seo.robotsContent }],
+    ['meta', { name: 'author', content: seo.author }],
+    ['meta', { property: 'og:site_name', content: seo.siteName }],
+    ['meta', { property: 'og:locale', content: seo.ogLocale }],
+    ['meta', { name: 'twitter:card', content: seo.twitterCard }],
+    ['meta', { name: 'theme-color', content: themeColor }],
     [
       'script',
       {},
@@ -67,10 +74,7 @@ export default defineConfig({
   transformHead(ctx) {
     const { pageData, siteData } = ctx;
     return buildPageHeadTags({
-      siteUrl,
-      siteName,
-      siteDescription,
-      siteLang: siteData.lang,
+      seo,
       base: siteData.base,
       cleanUrls: siteData.cleanUrls,
       pageData,
@@ -79,7 +83,7 @@ export default defineConfig({
 
   // 构建完成后自动生成 robots.txt 与 llms.txt（GEO）
   async buildEnd(siteConfig) {
-    await buildSeoArtifacts(siteConfig, { siteUrl, siteName, siteDescription });
+    await buildSeoArtifacts(siteConfig, { seo });
   },
 
   themeConfig: {

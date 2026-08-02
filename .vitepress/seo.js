@@ -9,9 +9,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const SITE_ALT_NAMES = ['LAYOSERVE泠域存储'];
-const AUTHOR = 'LAYOSERVE';
-
 /**
  * 构建时跳过 SEO 处理的页面（相对 srcDir 的路径），命中任一规则即跳过：
  * - `pages`   ：精确匹配的页面路径（Set，查找 O(1)，适合大量精确排除）
@@ -67,7 +64,8 @@ export function resolvePageUrl(siteUrl, base, relativePath, cleanUrls) {
  * 为每个页面生成 canonical / Open Graph / Twitter / JSON-LD 条目。
  * 返回 VitePress HeadConfig[]（属性值由 VitePress 自动转义）。
  */
-export function buildPageHeadTags({ siteUrl, siteName, siteDescription, siteLang, base, cleanUrls, pageData }) {
+export function buildPageHeadTags({ seo, base, cleanUrls, pageData }) {
+  const { siteUrl, siteName, siteDescription, siteLang, alternateNames, author } = seo;
   const { relativePath, title, description, frontmatter, lastUpdated, isNotFound } = pageData;
   if (isNotFound || isPageExcluded(relativePath)) return [];
 
@@ -95,7 +93,7 @@ export function buildPageHeadTags({ siteUrl, siteName, siteDescription, siteLang
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: siteName,
-      alternateName: SITE_ALT_NAMES,
+      alternateName: alternateNames,
       url: `${siteUrl.replace(/\/+$/, '')}/`,
       inLanguage: siteLang,
       description: siteDescription,
@@ -118,7 +116,7 @@ export function buildPageHeadTags({ siteUrl, siteName, siteDescription, siteLang
         inLanguage: siteLang,
         ...(frontmatter?.date ? { datePublished: new Date(frontmatter.date).toISOString() } : {}),
         ...(lastUpdated ? { dateModified: new Date(lastUpdated).toISOString() } : {}),
-        author: { '@type': 'Organization', name: AUTHOR },
+        author: { '@type': 'Organization', name: author },
         publisher: { '@type': 'Organization', name: siteName },
       };
   tags.push(['script', { type: 'application/ld+json' }, safeJsonLd(ld)]);
@@ -177,7 +175,8 @@ function readableTitle(page) {
  * 构建完成后自动写入 robots.txt 与 llms.txt（GEO：面向 LLM/AI 搜索引擎）。
  * 未配置 VITE_SITE_URL 时跳过，避免生成失效的绝对地址。
  */
-export async function buildSeoArtifacts(siteConfig, { siteUrl, siteName, siteDescription }) {
+export async function buildSeoArtifacts(siteConfig, { seo }) {
+  const { siteUrl, siteName, siteDescription } = seo;
   if (!siteUrl) {
     console.warn('[seo] 未配置 VITE_SITE_URL，跳过 robots.txt / llms.txt 生成');
     return;
