@@ -1,4 +1,3 @@
-
 /**
  * Customize default theme styling by overriding CSS variables:
  * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
@@ -8,7 +7,7 @@
  * Colors
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   --vp-c-brand: #646cff;
   --vp-c-brand-light: #747bff;
   --vp-c-brand-lighter: #9499ff;
@@ -40,17 +39,13 @@
 
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #bd34fe 30%,
-    #41d1ff
-  );
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
+      #bd34fe 30%,
+      #41d1ff);
 
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    #bd34fe 50%,
-    #47caff 50%
-  );
+  --vp-home-hero-image-background-image: linear-gradient(-45deg,
+      #bd34fe 50%,
+      #47caff 50%);
   --vp-home-hero-image-filter: blur(40px);
 }
 
@@ -63,6 +58,17 @@
 @media (min-width: 960px) {
   :root {
     --vp-home-hero-image-filter: blur(72px);
+  }
+}
+
+/* 放宽首页 Hero 标题的宽度限制，避免长标题被截断换行 */
+.VPHero .name {
+  max-width: 700px !important;
+}
+
+@media (min-width: 640px) {
+  .VPHero .name {
+    max-width: 800px !important;
   }
 }
 
@@ -88,4 +94,263 @@
 
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand) !important;
+}
+
+/**
+ * ak-ui 组件替换（保留双份）
+ * 规则：为每个 ak-* 组件复制一份改名为通用名的别名，原 .ak-* 保持不变；
+ * 同时映射到 VitePress 对应组件（.VPButton 按钮、.VPFeature 卡片等），
+ * 需压过 VitePress scoped 样式的属性加 !important。
+ * -------------------------------------------------------------------------- */
+
+/* ak-button → button / .VPButton */
+.button,
+.VPButton {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: Noto Serif SC, serif;
+  outline: none;
+  border: none !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  height: 50px !important;
+  width: 150px !important;
+  border-radius: 0 !important;
+  color: white !important;
+  background-color: gray !important;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.button:active,
+.VPButton:active {
+  color: lightgray;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1), 0 5px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* brand → ak-button--action，alt → ak-button--outlined */
+.VPButton.brand {
+  background-color: #00b3fd !important;
+  box-shadow: 2px 5px 50px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.VPButton.brand:active {
+  background-color: #0075a8 !important;
+}
+
+.VPButton.alt {
+  border: 2px solid #fff !important;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.VPButton.alt:active {
+  background-color: #737373 !important;
+  border-color: lightgray !important;
+}
+
+.button__icon {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+}
+
+.button__label {
+  display: inline-block;
+  font-family: Roboto, Noto Sans, Arial, sans-serif;
+  line-height: 1;
+  top: 0;
+}
+
+.button--block {
+  display: block;
+  width: 100%;
+}
+
+.button--fab {
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  padding: 0;
+}
+
+.button--fab:active {
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+}
+
+.button--fab .button__icon {
+  width: 36px;
+  height: 36px;
+}
+
+.button--outlined {
+  border: 2px solid #fff;
+  font-family: Roboto, Noto Sans, Arial, sans-serif;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.button--outlined:active {
+  background-color: #737373;
+  border-color: lightgray;
+}
+
+.button--action {
+  font-family: Roboto, Noto Sans, Arial, sans-serif;
+  text-align: right;
+  background-color: #00b3fd;
+  box-shadow: 2px 5px 50px -10px rgba(0, 0, 0, 0.5);
+}
+
+.button--action:active {
+  background-color: #0075a8;
+}
+
+.button--glow {
+  animation-name: glowing-low;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+.button--start {
+  width: 38px;
+  height: 38px;
+  background-color: transparent;
+  border: 5px solid #ffd802;
+  color: #ffd802;
+  font-style: italic;
+  font-size: xx-small;
+  font-weight: bold;
+  margin: 10px;
+  transform: rotate(-45deg);
+  float: left;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(0, 0, 0, 0.3);
+}
+
+.button--start .icon {
+  color: #ffd802;
+  transform: rotate(45deg) translate(22px, -10px);
+}
+
+.button--start .label {
+  transform: rotate(45deg) translateY(5px);
+  text-align: center;
+}
+
+.button--start__glow {
+  width: 38px;
+  height: 38px;
+  background-color: transparent;
+  border: 5px solid #ffd802;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-name: bounce;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+/* ak-card → card / .VPFeature */
+.card,
+.VPFeature {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  transition: 0.2s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+  outline: none;
+  display: inline-block;
+}
+
+.card--stripe {
+  width: 200px;
+  height: 200px;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, white 10px, white 15px);
+}
+
+.card--stripe:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.card--place {
+  border: 1px solid transparent;
+  width: 100px;
+  height: 100px;
+  box-shadow: inset 0 0 20px white;
+  border-bottom: 4px solid white;
+}
+
+.card--place:active,
+.card--place:focus {
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  box-shadow: inset 0 0 20px white, 0 5px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+}
+
+.card--place__rare {
+  border-bottom: 4px solid #ffd802;
+}
+
+/* ak-icon → icon */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/* ak-glow-* → glow-* */
+.glow-white {
+  animation-name: glowing-white;
+}
+
+.glow-black {
+  animation-name: glowing-black;
+}
+
+.glow-low {
+  animation-name: glowing-low;
+}
+
+.glow-basic {
+  animation-name: glowing-basic;
+}
+
+.glow-primary {
+  animation-name: glowing-primary;
+}
+
+.glow-secondary {
+  animation-name: glowing-secondary;
+}
+
+.glow-advanced {
+  animation-name: glowing-advanced;
+}
+
+/* ak-font-* → font-* */
+.font-serif {
+  font-family: Noto Serif SC, serif;
+}
+
+.font-sans-serif {
+  font-family: Roboto, Noto Sans, Arial, sans-serif;
+}
+
+/* ak-text--title → title / .VPHero .name */
+.title,
+.text-title {
+  font-weight: 900;
+  font-size: 3rem;
+}
+
+.VPHero .name {
+  font-weight: 900 !important;
 }

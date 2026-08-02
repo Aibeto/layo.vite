@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "LAYOSERVE"
-  text: "泠域存储"
+  name: "RAINCRAT:LAYOSERVE"
+  text: "雨绘巷：泠域存储"
   tagline: "何意味？"
   actions:
     - theme: brand
