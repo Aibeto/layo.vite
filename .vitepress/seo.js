@@ -9,8 +9,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const SITE_ALT_NAMES = ['泠域存储', '雨绘巷'];
-const AUTHOR = 'RAINCRAT';
+const SITE_ALT_NAMES = ['LAYOSERVE泠域存储'];
+const AUTHOR = 'LAYOSERVE';
 
 /**
  * 构建时跳过 SEO 处理的页面（相对 srcDir 的路径），命中任一规则即跳过：
@@ -22,7 +22,8 @@ const AUTHOR = 'RAINCRAT';
 export const SEO_EXCLUDE_PAGES = {
   pages: new Set(['AGENTS.md', 'readme.md']),
   dirs: [],
-  patterns: [],
+  // 文件名（basename）含 example 的页面，任意层级；不匹配目录（目录条目转为 xxx/index.md，basename 为 index.md）
+  patterns: [/(^|\/)[^/]*example[^/]*\.md$/],
 };
 
 /** 判断某个页面相对路径是否命中排除规则 */

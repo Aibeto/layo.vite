@@ -31,7 +31,7 @@ export default defineConfig({
     ],
     // 全站静态 SEO meta
     ['meta', { name: 'robots', content: 'index, follow' }],
-    ['meta', { name: 'author', content: 'RAINCRAT' }],
+    ['meta', { name: 'author', content: 'LAYOSERVE' }],
     ['meta', { property: 'og:site_name', content: siteName }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
     ['meta', { name: 'twitter:card', content: 'summary' }],
@@ -39,7 +39,11 @@ export default defineConfig({
     [
       'script',
       {},
-      `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "xw4lptvvar");`
+      // RAINCRAT 雨绘巷
+      // `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "xw4lptvvar");`
+
+      // LAYOSERVE 泠域存储
+      `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "xw58fwyen0");`
     ]
   ],
 
