@@ -1,1 +1,0 @@
-import{H as e,ht as t,nt as n,tt as r}from"./chunks/framework.DPaNRfRs.js";var i=JSON.parse(`{"title":"AGENTS.md","description":"","frontmatter":{},"headers":[],"relativePath":"AGENTS.md","filePath":"AGENTS.md"}`),a={name:`AGENTS.md`};function o(e,i,a,o,s,c){return t(),r(`div`,null,[...i[0]||=[n("",10)]])}var s=e(a,[[`render`,o]]);export{i as __pageData,s as default};
