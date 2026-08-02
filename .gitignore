@@ -2,3 +2,7 @@
 ./blogs/.vitepress/dist
 node_modules
 .DS_Store
+./docs/.vitepress/cache
+./docs/.vitepress/dist
+.//.vitepress/cache
+.//.vitepress/dist

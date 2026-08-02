@@ -1,5 +1,5 @@
 ---
-date: 2026-08-02T06:18:14.290Z
+date: 2026-08-02T06:31:12.441Z
 title: 'Markdown: The Language of the Web'
 author: Robot Editor
 category: Tutorial
