@@ -39,6 +39,12 @@ export default defineConfig({
     [
       'script',
       {},
+      // Clarity 同意默认值：未表态前一律拒绝（consentv2 队列在加载器之前生效）
+      `window.clarity=window.clarity||function(){(window.clarity.q=window.clarity.q||[]).push(arguments)};window.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:'denied'});`
+    ],
+    [
+      'script',
+      {},
       // RAINCRAT 雨绘巷
       // `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "xw4lptvvar");`
 

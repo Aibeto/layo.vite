@@ -26,6 +26,7 @@
   theme/
     index.js       # 主题入口（唯一生效的入口，extends DefaultTheme）
     style.css      # 全局样式与 ak-ui 组件替换（保留双份规则）
+    cookie-consent.js # 第三方 Cookie 同意管理器（vanilla-cookieconsent）+ Clarity 同意同步
 index.md           # 首页（hero + features）
 docs/              # 文档页
 .env               # VITE_SITE_URL 全站唯一域名来源（构建时派生 sitemap/canonical/OG 等）
