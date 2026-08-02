@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 查看blogs
-      link: /blog/
+      link: /blogs/
     - theme: brand
       text: 查看文档
       link: /docs/

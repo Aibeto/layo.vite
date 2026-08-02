@@ -2585,7 +2585,7 @@ var VPNavBarSearch_vue_vue_type_script_setup_true_lang_default = /*@__PURE__*/ d
 	__name: "VPNavBarSearch",
 	__ssrInlineRender: true,
 	setup(__props) {
-		const VPLocalSearchBox = defineAsyncComponent(() => import("./VPLocalSearchBox.YknLm-Ua.js"));
+		const VPLocalSearchBox = defineAsyncComponent(() => import("./VPLocalSearchBox.CeA_rvHr.js"));
 		const VPAlgoliaSearchBox = () => null;
 		const { theme, localeIndex, lang } = useData();
 		const provider = "local";
