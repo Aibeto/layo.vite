@@ -1,18 +1,19 @@
 import DefaultTheme from 'vitepress/theme';
-import { h } from 'vue';
+import { VPBArchives, VPBHome, VPBTags } from '@chunge16/vitepress-blogs-theme';
 import '@yunyoujun/ak-ui/dist/ak-ui.css';
 import './style.css';
 import { setupCookieConsent } from './cookie-consent.js';
-import CookieConsentButton from './CookieConsentButton.vue';
+import Layout from './Layout.vue';
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router, siteData }) {
     setupCookieConsent();
+    // VPB 布局组件：供 blogs 页面（<VPBHome />、<VPBArchives />、<VPBTags />）使用
+    app.component('VPBHome', VPBHome);
+    app.component('VPBArchives', VPBArchives);
+    app.component('VPBTags', VPBTags);
   },
-  // 在导航栏右侧（主题开关旁）追加手动打开 Cookie 偏好设置的按钮
-  Layout: () =>
-    h(DefaultTheme.Layout, null, {
-      'nav-bar-content-after': () => h(CookieConsentButton),
-    }),
+  // 组合布局：博客文章/作者页插槽 + 导航栏 Cookie 按钮（见 Layout.vue）
+  Layout,
 };

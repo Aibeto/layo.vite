@@ -5,8 +5,8 @@
 ## 项目概览
 
 - 技术栈：VitePress 2.0（alpha）+ Vue 3，纯静态文档/博客站点。
-- 内容：`index.md`（首页）+ `docs/`（文档页）。
-- UI：VitePress 默认主题（`DefaultTheme`）+ `@yunyoujun/ak-ui`（明日方舟风格 UI 组件库）。
+- 内容：`index.md`（首页）+ `blogs/`（博客站）+ `docs/`（文档页）。
+- UI：VitePress 默认主题（`DefaultTheme`）+ `@yunyoujun/ak-ui`（明日方舟风格 UI 组件库）+ `@chunge16/vitepress-blogs-theme`（VPB 博客主题，提供 `<VPBHome />`、`<VPBArchives />`、`<VPBTags />` 组件与文章/作者页插槽）。
 - 语言：站内内容与交流统一使用中文（zh-CN）。
 
 ## 常用命令
@@ -25,11 +25,13 @@
   seo.js           # SEO/GEO 工具模块：URL 派生、页面 head 注入、robots/llms 生成
   seo-config.js    # SEO 独立配置：所有 SEO 变量集中于此，默认沿用 config.js 的值
   theme/
-    index.js       # 主题入口（唯一生效的入口，extends DefaultTheme，Layout 插槽注入导航栏按钮）
+    index.js       # 主题入口（唯一生效的入口，extends DefaultTheme，注册 VPB 组件，enhanceApp 初始化 Cookie 同意）
+    Layout.vue     # 组合布局：博客文章/作者页插槽（VPB）+ 导航栏 Cookie 按钮（nav-bar-content-after）
     style.css      # 全局样式与 ak-ui 组件替换（保留双份规则）
     cookie-consent.js # 第三方 Cookie 同意管理器（vanilla-cookieconsent）+ Clarity 同意同步
-    CookieConsentButton.vue # 导航栏右上角手动弹出 Cookie 偏好设置的按钮（theme/index.js 的 Layout 插槽引入）
+    CookieConsentButton.vue # 导航栏右上角手动弹出 Cookie 偏好设置的按钮（Layout.vue 的 nav-bar-content-after 插槽引入）
 index.md           # 首页（hero + features）
+blogs/             # 博客站：index.md（VPBHome 文章列表）+ posts/（文章）+ authors/（作者）+ archives.md（VPBArchives）+ tags.md（VPBTags）
 docs/              # 文档页
 .env               # 站点配置唯一来源：VITE_SITE_*（站点基础）+ VITE_SEO_*（SEO 独立覆盖）
 package.json
@@ -49,3 +51,4 @@ package.json
 10. 每次完成任务后检查是否需要更新 `AGENTS.md`。
 11. **全站主题变量映射集中在 `style.css` 顶部**：`--ak-*` 调色板/字体变量 → `--vp-c-*`（明/暗双主题）、`--vp-button-*`、`--vp-home-hero-*`、`--vp-custom-block-*`。新增全站风格化时优先改变量映射，避免硬编码颜色；文档风格化（导航/侧边栏/代码块/表格/引用/滚动条）位于 style.css 的"组件细节"区块。
 12. **SEO/GEO 无硬链接**：站点与 SEO 变量全部来自 `.env`——`VITE_SITE_*`（URL/站名/描述/语言/主题色）在 `config.js` 读取，`VITE_SEO_*`（SEO 站名/描述/备选名/作者/OG/Twitter/robots）在 `seo-config.js` 读取，未设置时回退到站点基础变量或代码默认值，代码内不硬编码域名与站名；描述类变量允许换行（双引号 + `\n`，或双引号内真实换行），代码侧统一经 `expandNewlines` 归为真实换行；`sitemap.xml`、`robots.txt`、`llms.txt` 由 VitePress 内置 `sitemap` 配置与 `config.js` 的 `buildEnd` 钩子在构建时自动生成，页面级 canonical/OG/JSON-LD 由 `transformHead` 钩子注入（实现集中在 `.vitepress/seo.js`）。新增 SEO 逻辑一律在 `seo.js` 中实现，不要在页面里写死绝对地址。需要跳过 SEO 的页面在 `seo.js` 的 `SEO_EXCLUDE_PAGES` 中配置：`pages`（精确页）、`dirs`（目录前缀，整目录排除）、`patterns`（正则）。
+13. **VPB 博客主题约定**：博客配置集中在 `config.js` 的 `themeConfig.blog`——`postsPath`/`authorsPath` 为相对 srcDir 的路径（如 `blogs/posts`），`path`/`tagsPath` 为路由路径（如 `/blogs`）；`transformPageData` 必须调用 `processData` 为文章/作者页打标；`vite` 需接 `@tailwindcss/vite` 插件，并对 `@chunge16/vitepress-blogs-theme` 配置 `optimizeDeps.exclude` 与 `ssr.noExternal`。`<VPBHome />`、`<VPBArchives />`、`<VPBTags />` 在 `theme/index.js` 的 `enhanceApp` 注册，博客插槽由 `theme/Layout.vue` 组合。VPB 自带 Tailwind preflight、品牌色、背景与字体，且其样式表加载顺序靠后——覆盖 vpb 样式必须在 `style.css` 中用 `!important` 或 `html` 前缀提高特异性：`--vpb-*` 变量映射集中在 `style.css` 顶部（带 `!important`），body 网格背景与标题字体覆盖集中在 "html body" 及其后 VPB 统一区块。新增博客文章放 `blogs/posts/`，作者页放 `blogs/authors/`。

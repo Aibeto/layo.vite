@@ -1,4 +1,7 @@
 import { defineConfig, loadEnv } from 'vitepress';
+import tailwindcss from '@tailwindcss/vite';
+import { processData } from '@chunge16/vitepress-blogs-theme/config';
+import { zhCN } from 'date-fns/locale';
 import { buildPageHeadTags, buildSeoArtifacts, transformSitemapItems } from './seo.js';
 import { createSeoConfig, expandNewlines } from './seo-config.js';
 
@@ -91,7 +94,15 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      // { text: "首页", link: '/' },
+      // {
+      //   text: '博客',
+      //   activeMatch: '/blogs/',
+      //   items: [
+      //     { text: '博客首页', link: '/blogs/' },
+      //     { text: '标签', link: '/blogs/tags' },
+      //     { text: '归档', link: '/blogs/archives' },
+      //   ],
+      // },
     ],
 
     sidebar: [
@@ -111,5 +122,54 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+
+    // VPB（VitePress Blog）主题配置：路径均为相对 srcDir（postsPath/authorsPath）或路由路径（path/tagsPath）
+    blog: {
+      title: siteName,
+      description: siteDescription,
+      path: '/blogs',
+      postsPath: 'blogs/posts',
+      authorsPath: 'blogs/authors',
+      tagsPath: '/blogs/tags',
+      defaultAuthor: seo.author,
+      categoryIcons: {
+        article: 'i-[carbon--notebook]',
+        tutorial: 'i-[carbon--book]',
+        document: 'i-[carbon--document]',
+      },
+      tagIcons: {
+        github: 'i-[carbon--logo-github]',
+        vue: 'i-[logos--vue]',
+        javascript: 'i-[logos--javascript]',
+        'web development': 'i-[carbon--development]',
+        html: 'i-[logos--html-5]',
+        git: 'i-[logos--git-icon]',
+        vite: 'i-[logos--vitejs]',
+        locked: 'i-[carbon--locked]',
+        react: 'i-[logos--react]',
+        blog: 'i-[carbon--blog]',
+        comment: 'i-[carbon--add-comment]',
+      },
+      dateConfig: {
+        format: 'yyyy/MM/dd',
+        locale: zhCN,
+      },
+    },
+  },
+
+  // VPB 主题基于 Tailwind CSS v4 构建，需要接入其 vite 插件并避免预构建/SSR 外部化
+  vite: {
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ['@chunge16/vitepress-blogs-theme'],
+    },
+    ssr: {
+      noExternal: ['@chunge16/vitepress-blogs-theme'],
+    },
+  },
+
+  // 为 posts/authors 页面标记博客布局（文章页/作者页的插槽注入依据）
+  async transformPageData(pageData, ctx) {
+    await processData(pageData, ctx);
   },
 });

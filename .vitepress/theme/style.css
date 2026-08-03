@@ -65,7 +65,7 @@
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
 
   /* 全站工业网格纹理颜色（方舟风背景） */
-  --vp-c-grid: rgba(30, 36, 48, 0.055);
+  --vp-c-grid: rgba(30, 36, 48, 0.085);
 
   /* 组件阴影（亮色）：阴影色取组件边缘色的同色系低透明度版本 */
   --vp-c-shadow: rgba(30, 36, 48, 0.34);
@@ -77,6 +77,20 @@
   --vp-c-shadow-warning: rgba(216, 221, 90, 0.3);
   /* 橙边缘阴影：与 ak-accent 边缘同色 */
   --vp-c-shadow-danger: rgba(246, 84, 14, 0.32);
+
+  /* VPB 博客主题变量映射（覆盖 @chunge16/vitepress-blogs-theme 的米白/绿黑系为 ak 方舟蓝灰系）。
+   * vpb 样式表加载顺序靠后，故用 !important 确保覆盖；值引用 var(--vp-c-*) 惰性求值，明暗主题自动适配。 */
+  --vpb-bg: var(--vp-c-bg) !important;
+  --vpb-bg-soft: var(--vp-c-bg-soft) !important;
+  --vpb-bg-strong: var(--vp-c-bg-elv) !important;
+  --vpb-panel-border: var(--vp-c-border) !important;
+  --vpb-panel-shadow: 0 18px 40px var(--vp-c-shadow-inset) !important;
+  --vpb-panel-shadow-hover: 0 26px 56px var(--vp-c-shadow) !important;
+  --vpb-text-strong: var(--vp-c-text-1) !important;
+  --vpb-text-soft: var(--vp-c-text-2) !important;
+  --vpb-grid-line: var(--vp-c-grid) !important;
+  /* 去掉 vpb 薄荷绿顶部光晕，body 背景由下方 "html body" 规则全权控制（含方舟网格纹理） */
+  --vpb-accent-glow: none !important;
 }
 
 /**
@@ -114,7 +128,7 @@
   --vp-sidebar-bg-color: var(--vp-c-bg-alt);
 
   /* 全站工业网格纹理颜色（方舟风背景，暗色） */
-  --vp-c-grid: rgba(255, 255, 255, 0.04);
+  --vp-c-grid: rgba(255, 255, 255, 0.07);
 
   /* 组件阴影（暗色）：亮色用灰影、暗色用白影；白边黑内组件阴影与白边同色，彩晕提亮增强辉光 */
   --vp-c-shadow: rgba(255, 255, 255, 0.3);
@@ -263,20 +277,50 @@ html {
   background-size: 44px 44px, 44px 44px, auto;
 }
 
-body {
+/* 覆盖 VPB 主题的 body 规则：vpb 的 `body`/`.dark body` 用 background 简写吞掉了网格层，
+ * 且加载顺序靠后，故用 `html body`（含 !important）确保方舟工业网格纹理与底色生效 */
+html body {
   overscroll-behavior: none;
   /* 全局字重上调，贴近明日方舟粗黑风格 */
   font-weight: 450;
+  font-family: var(--ak-font-sans);
+  letter-spacing: normal;
+  color: var(--vp-c-text-1);
   background-image:
     /* 方舟工业网格纹理（scroll：与 html 网格同锚点，回弹时边缘无缝衔接） */
     linear-gradient(var(--vp-c-grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--vp-c-grid) 1px, transparent 1px),
     radial-gradient(1100px 560px at 10% -12%, var(--vp-c-brand-soft), transparent 62%),
     radial-gradient(900px 520px at 104% 12%, rgba(255, 216, 2, 0.05), transparent 55%),
-    linear-gradient(180deg, var(--vp-c-bg-alt), var(--vp-c-bg));
-  background-size: 44px 44px, 44px 44px, auto, auto, auto;
+    linear-gradient(180deg, var(--vp-c-bg-alt), var(--vp-c-bg)) !important;
+  background-size: 44px 44px, 44px 44px, auto, auto, auto !important;
   /* 网格随文档滚动（与 html 对齐），辉光与底色固定在视口 */
-  background-attachment: scroll, scroll, fixed, fixed, fixed;
+  background-attachment: scroll, scroll, fixed, fixed, fixed !important;
+  background-color: var(--vp-c-bg) !important;
+}
+
+/* 覆盖 VPB 主题的字体规则：vpb 加载顺序靠后，用 html 前缀提高特异性确保覆盖，
+ * 将 vpb 的衬线标题改回 ak 方舟粗黑无衬线风格 */
+html .vp-doc h1,
+html .vp-doc h2,
+html .vp-doc h3 {
+  border-top: none;
+  font-family: var(--ak-font-sans);
+  letter-spacing: normal;
+}
+
+html .vp-doc h1 {
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  line-height: 1.05;
+}
+
+/* 博客首页大标题与页面标题（vpb-display-title / vpb-page-title）同统一为 ak 无衬线 */
+html .vpb-display-title,
+html .vpb-page-title {
+  border-top: none !important;
+  font-family: var(--ak-font-sans);
+  letter-spacing: -0.01em;
+  color: var(--vp-c-text-1);
 }
 
 /* 文本选中：ak 深蓝底白字（方舟界面风格） */
