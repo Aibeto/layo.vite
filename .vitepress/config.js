@@ -93,6 +93,8 @@ export default defineConfig({
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    // 深色模式开关标签（覆盖默认的 "Appearance"）
+    darkModeSwitchLabel: '深色模式',
     nav: [
       // {
       //   text: '博客',
