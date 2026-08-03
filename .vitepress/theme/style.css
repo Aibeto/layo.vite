@@ -13,18 +13,19 @@
   --ak-secondary: #cfc2d1;
   --ak-advanced: #f1c644;
   --ak-accent: #f6540e;
-  --ak-blue: #22bbff;
+  /* 全部归一到 ak-primary（站点配色统一，Blue/Light Blue 仅作调色板别名保留） */
+  --ak-blue: var(--ak-primary);
   --ak-yellow: #ffd802;
   --ak-dark-blue: #0075a8;
-  --ak-light-blue: #3ff7ff;
+  --ak-light-blue: var(--ak-primary);
   --ak-gray: #313131;
   --ak-dark: #222;
   --ak-font-serif: "Rajdhani", "Noto Serif SC", "Noto Serif", "Songti SC", "STSong", "SimSun", serif;
   --ak-font-sans: "Rajdhani", "Noto Sans SC", "Noto Sans", Roboto, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
 
-  /* 辉光/描边变量（CDN keyframes 默认白色，在亮色主题下不可见，故改为 ak 蓝系） */
-  --ak-fx-glow-color: var(--ak-blue);
-  --ak-outline-color: var(--ak-blue);
+  /* 辉光/描边变量（CDN keyframes 默认白色，在亮色主题下不可见，故改为 ak 主色系） */
+  --ak-fx-glow-color: var(--ak-primary);
+  --ak-outline-color: var(--ak-primary);
   --ak-loading-color: var(--ak-yellow);
 }
 
@@ -36,15 +37,15 @@
   --vp-c-brand-1: #0e86b8;
   --vp-c-brand-2: var(--ak-dark-blue);
   --vp-c-brand-3: var(--ak-primary);
-  --vp-c-brand-soft: rgba(34, 187, 255, 0.14);
+  --vp-c-brand-soft: rgba(74, 171, 234, 0.14);
   /* 兼容旧变量 */
   --vp-c-brand: var(--vp-c-brand-1);
   --vp-c-brand-light: var(--vp-c-brand-2);
   --vp-c-brand-lighter: var(--vp-c-brand-3);
-  --vp-c-brand-lightest: #7fd4f2;
+  --vp-c-brand-lightest: #9ec9ef;
   --vp-c-brand-dark: var(--ak-dark-blue);
   --vp-c-brand-darker: #00547a;
-  --vp-c-brand-dimm: rgba(34, 187, 255, 0.08);
+  --vp-c-brand-dimm: rgba(74, 171, 234, 0.08);
 
   --vp-font-family-base: var(--ak-font-sans);
 
@@ -70,9 +71,9 @@
   /* 组件阴影（亮色）：阴影色取组件边缘色的同色系低透明度版本 */
   --vp-c-shadow: rgba(30, 36, 48, 0.34);
   --vp-c-shadow-inset: rgba(30, 36, 48, 0.18);
-  /* 蓝边缘阴影：与 ak 蓝边缘（代码块左缘/特性卡条/brand 按钮）同色 */
-  --vp-c-shadow-brand: rgba(34, 187, 255, 0.4);
-  --vp-c-shadow-brand-strong: rgba(34, 187, 255, 0.5);
+  /* 蓝边缘阴影：与 ak primary 边缘（代码块左缘/特性卡条/brand 按钮）同色 */
+  --vp-c-shadow-brand: rgba(74, 171, 234, 0.4);
+  --vp-c-shadow-brand-strong: rgba(74, 171, 234, 0.5);
   /* 黄边缘阴影：与 ak-basic 边缘同色 */
   --vp-c-shadow-warning: rgba(216, 221, 90, 0.3);
   /* 橙边缘阴影：与 ak-accent 边缘同色 */
@@ -98,18 +99,18 @@
  * -------------------------------------------------------------------------- */
 
 .dark {
-  --vp-c-brand-1: var(--ak-light-blue);
-  --vp-c-brand-2: var(--ak-blue);
-  --vp-c-brand-3: var(--ak-primary);
-  --vp-c-brand-soft: rgba(63, 247, 255, 0.16);
+  --vp-c-brand-1: var(--ak-primary);
+  --vp-c-brand-2: var(--ak-primary);
+  --vp-c-brand-3: var(--ak-dark-blue);
+  --vp-c-brand-soft: rgba(74, 171, 234, 0.16);
   /* 兼容旧变量 */
   --vp-c-brand: var(--vp-c-brand-1);
   --vp-c-brand-light: var(--vp-c-brand-2);
   --vp-c-brand-lighter: var(--vp-c-brand-3);
-  --vp-c-brand-lightest: #9be0f7;
+  --vp-c-brand-lightest: #a5d0ef;
   --vp-c-brand-dark: var(--ak-dark-blue);
   --vp-c-brand-darker: #00547a;
-  --vp-c-brand-dimm: rgba(63, 247, 255, 0.08);
+  --vp-c-brand-dimm: rgba(74, 171, 234, 0.08);
 
   --vp-c-bg: #030303;
   --vp-c-bg-soft: #1e2129;
@@ -133,8 +134,8 @@
   /* 组件阴影（暗色）：亮色用灰影、暗色用白影；白边黑内组件阴影与白边同色，彩晕提亮增强辉光 */
   --vp-c-shadow: rgba(255, 255, 255, 0.3);
   --vp-c-shadow-inset: rgba(255, 255, 255, 0.15);
-  --vp-c-shadow-brand: rgba(63, 247, 255, 0.45);
-  --vp-c-shadow-brand-strong: rgba(63, 247, 255, 0.6);
+  --vp-c-shadow-brand: rgba(74, 171, 234, 0.45);
+  --vp-c-shadow-brand-strong: rgba(74, 171, 234, 0.6);
   --vp-c-shadow-warning: rgba(216, 221, 90, 0.4);
   --vp-c-shadow-danger: rgba(246, 84, 14, 0.5);
 }
@@ -162,13 +163,13 @@
 :root {
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: linear-gradient(120deg,
-      var(--ak-light-blue),
-      var(--ak-blue) 45%,
+      var(--ak-primary),
+      var(--ak-dark-blue) 45%,
       var(--ak-yellow));
 
   --vp-home-hero-image-background-image: linear-gradient(-45deg,
       var(--ak-dark-blue) 50%,
-      var(--ak-light-blue) 50%);
+      var(--ak-primary) 50%);
   --vp-home-hero-image-filter: blur(40px);
 }
 
@@ -199,11 +200,11 @@
 
 @keyframes ak-hero-glow {
   from {
-    filter: drop-shadow(0 0 2px rgba(63, 247, 255, 0.25));
+    filter: drop-shadow(0 0 2px rgba(74, 171, 234, 0.25));
   }
 
   to {
-    filter: drop-shadow(0 0 22px rgba(63, 247, 255, 0.55));
+    filter: drop-shadow(0 0 22px rgba(74, 171, 234, 0.55));
   }
 }
 
@@ -343,19 +344,19 @@ html .vpb-page-title {
   height: 3px;
   background: linear-gradient(90deg,
       var(--ak-dark-blue),
-      var(--ak-blue) 45%,
-      var(--ak-light-blue));
+      var(--ak-primary) 45%,
+      var(--ak-primary));
   z-index: 1;
   animation: ak-nav-glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes ak-nav-glow {
   from {
-    filter: drop-shadow(0 0 2px rgba(34, 187, 255, 0.35));
+    filter: drop-shadow(0 0 2px rgba(74, 171, 234, 0.35));
   }
 
   to {
-    filter: drop-shadow(0 0 10px rgba(63, 247, 255, 0.8));
+    filter: drop-shadow(0 0 10px rgba(74, 171, 234, 0.8));
   }
 }
 
@@ -375,7 +376,7 @@ html .vpb-page-title {
   left: 0;
   width: 64px;
   height: 4px;
-  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-light-blue));
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-primary));
   transform: skewX(-20deg);
   transform-origin: left top;
 }
@@ -397,7 +398,7 @@ html .vpb-page-title {
   right: 0.6em;
   bottom: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-light-blue));
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-primary));
   transform: skewX(-30deg);
   opacity: 0;
   transition: opacity 0.2s;
@@ -429,24 +430,24 @@ html .vpb-page-title {
   font-weight: 900;
 }
 
-/* 文档引用块：ak 蓝左边线 */
+/* 文档引用块：ak primary 左边线 */
 .vp-doc blockquote {
-  border-left: 4px solid var(--ak-blue);
+  border-left: 4px solid var(--ak-primary);
   background-color: var(--vp-c-brand-soft);
   border-radius: 0 8px 8px 0;
   padding: 8px 16px;
 }
 
-/* 行内代码：ak 蓝字 */
+/* 行内代码：ak primary 字 */
 .vp-doc :not(pre)>code {
   color: var(--vp-c-brand-1);
   background-color: var(--vp-c-brand-soft);
 }
 
-/* 代码块：深色底 + ak 蓝边框与光晕 */
+/* 代码块：深色底 + ak primary 边框与光晕 */
 .vp-doc div[class*='language-'] {
   border: 1px solid var(--vp-c-border);
-  border-left: 3px solid var(--ak-blue);
+  border-left: 3px solid var(--ak-primary);
   background-color: var(--vp-c-bg-alt);
   border-radius: 8px;
   box-shadow: 0 2px 6px var(--vp-c-shadow);
@@ -497,7 +498,7 @@ html .vpb-page-title {
   top: 0.22em;
   bottom: 0.22em;
   width: 4px;
-  background: linear-gradient(180deg, var(--ak-dark-blue), var(--ak-light-blue));
+  background: linear-gradient(180deg, var(--ak-dark-blue), var(--ak-primary));
   transform: skewX(-15deg);
 }
 
@@ -513,7 +514,7 @@ html .vpb-page-title {
   top: 0.3em;
   bottom: 0.3em;
   width: 3px;
-  background: var(--ak-blue);
+  background: var(--ak-primary);
   opacity: 0.6;
   transform: skewX(-15deg);
 }
@@ -530,7 +531,7 @@ html .vpb-page-title {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--ak-blue);
+  background-color: var(--ak-primary);
 }
 
 ::-webkit-scrollbar-track {
@@ -610,13 +611,13 @@ html .vpb-page-title {
 /* 对应 .ak-button--action（VPButton.brand 替换；CDN 无 hover/active 变色，固色对齐） */
 .VPButton.brand {
   text-align: right;
-  background-color: #2bf !important;
+  background-color: var(--ak-primary) !important;
   box-shadow: 0 4px 12px var(--vp-c-shadow-brand) !important;
 }
 
 .VPButton.brand:hover,
 .VPButton.brand:active {
-  background-color: #2bf !important;
+  background-color: var(--ak-primary) !important;
 }
 
 /* 对应 .ak-button--outline（VPButton.alt 替换；CDN 无 hover/active 变色，固色对齐） */
@@ -684,7 +685,7 @@ html .vpb-page-title {
 /* 对应 .ak-button--action */
 .button--action {
   text-align: right;
-  background-color: #2bf;
+  background-color: var(--ak-primary);
   box-shadow: 0 4px 12px var(--vp-c-shadow-brand);
 }
 
@@ -1193,7 +1194,7 @@ html .vpb-page-title {
 /* 对应 .ak-level .prefix-icon .ak-icon */
 .level .prefix-icon .icon {
   position: absolute;
-  color: var(--level-prefix-icon-color, #2bf);
+  color: var(--level-prefix-icon-color, var(--ak-primary));
   left: -1rem;
   top: 0.2rem;
   width: 2rem;
@@ -1465,7 +1466,7 @@ html .vpb-page-title {
 
   --cc-overlay-bg: rgba(0, 0, 0, 0.55);
   --cc-webkit-scrollbar-bg: var(--vp-c-divider);
-  --cc-webkit-scrollbar-hover-bg: var(--ak-blue);
+  --cc-webkit-scrollbar-hover-bg: var(--ak-primary);
   --cc-footer-bg: var(--vp-c-bg-soft);
   --cc-footer-color: var(--vp-c-text-2);
   --cc-footer-border-color: var(--vp-c-divider);
@@ -1511,7 +1512,7 @@ html .vpb-page-title {
 
   --cc-overlay-bg: rgba(0, 0, 0, 0.72);
   --cc-webkit-scrollbar-bg: var(--vp-c-divider);
-  --cc-webkit-scrollbar-hover-bg: var(--ak-blue);
+  --cc-webkit-scrollbar-hover-bg: var(--ak-primary);
   --cc-footer-bg: var(--vp-c-bg-soft);
   --cc-footer-color: var(--vp-c-text-2);
   --cc-footer-border-color: var(--vp-c-divider);
@@ -1540,7 +1541,7 @@ html .vpb-page-title {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-blue) 45%, var(--ak-light-blue));
+  background: linear-gradient(90deg, var(--ak-dark-blue), var(--ak-primary));
   z-index: 3;
 }
 
@@ -1552,7 +1553,7 @@ html .vpb-page-title {
 
 /* 偏好分区展开条：左侧 3px 蓝边（同代码块左缘） */
 #cc-main .pm__section--toggle .pm__section-title {
-  border-left: 3px solid var(--ak-blue);
+  border-left: 3px solid var(--ak-primary);
 }
 
 /* 分区描述行高微调 */
@@ -1586,7 +1587,7 @@ html .vpb-page-title {
 }
 
 .vp-cookie-btn:hover {
-  border-color: var(--ak-blue);
+  border-color: var(--ak-primary);
   color: var(--vp-c-brand-1);
   box-shadow: 0 0 12px var(--vp-c-shadow-brand);
 }
@@ -1594,4 +1595,221 @@ html .vpb-page-title {
 .vp-cookie-btn__icon {
   width: 18px;
   height: 18px;
+}
+
+/**
+ * 明日方舟风格化增强
+ * -------------------------------------------------------------------------- */
+
+/* ============================ A. 面板棱角化 ============================ */
+
+/* 首页特性卡：六边形斜切角 + 四角 L 型角标（方舟材料卡风格）。
+ * clip-path 会裁掉 box-shadow，故 hover 辉光改用 filter: drop-shadow。 */
+.VPFeature {
+  clip-path: polygon(0 0,
+      calc(100% - 16px) 0,
+      100% 16px,
+      100% 100%,
+      16px 100%,
+      0 calc(100% - 16px));
+}
+
+.VPFeature::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background:
+    linear-gradient(var(--ak-primary), var(--ak-primary)) left top / 10px 2px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) left top / 2px 10px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) right top / 10px 2px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) right top / 2px 10px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) left bottom / 10px 2px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) left bottom / 2px 10px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) right bottom / 10px 2px,
+    linear-gradient(var(--ak-primary), var(--ak-primary)) right bottom / 2px 10px;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.VPFeature:hover {
+  filter: drop-shadow(0 0 22px var(--vp-c-shadow-brand-strong));
+}
+
+.VPFeature:hover::after {
+  opacity: 0.9;
+}
+
+/* 博客文章卡片（vpb-card）：同款斜切角 + hover 辉光（clip-path 裁掉其自带 box-shadow） */
+.vpb-card {
+  clip-path: polygon(0 0,
+      calc(100% - 16px) 0,
+      100% 16px,
+      100% 100%,
+      16px 100%,
+      0 calc(100% - 16px));
+}
+
+.vpb-card:hover {
+  filter: drop-shadow(0 0 20px var(--vp-c-shadow-brand-strong));
+}
+
+/* ============================ B. 背景装饰 ============================ */
+
+/* 全屏方舟战术背景层：四角大六边形/菱形徽标 + 瞄准环 + 边缘刻度虚线 + 顶部警示条 + 终端编号文字。
+ * 单一 SVG 覆盖全屏（preserveAspectRatio=slice），纯装饰，不挡交互。 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none'%3E%3Cpath d='M1760 20 1900 90 1900 230 1760 300 1620 230 1620 90z' stroke='%234aabea' stroke-opacity='0.4' stroke-width='2'/%3E%3Ccircle cx='1760' cy='160' r='90' stroke='%234aabea' stroke-opacity='0.2' stroke-width='1'/%3E%3Ccircle cx='1760' cy='160' r='30' stroke='%234aabea' stroke-opacity='0.3' stroke-width='1.5'/%3E%3Ccircle cx='1760' cy='160' r='150' stroke='%234aabea' stroke-opacity='0.12' stroke-width='1' stroke-dasharray='4 8'/%3E%3Cpath d='M1760 40 1760 280 M1620 90 1900 230 M1900 90 1620 230' stroke='%234aabea' stroke-opacity='0.12' stroke-width='1'/%3E%3Cpath d='M120 60 260 130 260 260 120 330 -20 260 -20 130z' stroke='%234aabea' stroke-opacity='0.3' stroke-width='1.5'/%3E%3Ccircle cx='120' cy='195' r='60' stroke='%234aabea' stroke-opacity='0.18' stroke-width='1'/%3E%3Ccircle cx='120' cy='195' r='20' stroke='%234aabea' stroke-opacity='0.28' stroke-width='1.2'/%3E%3Cpath d='M180 780 420 960 180 1140 -60 960z' stroke='%234aabea' stroke-opacity='0.35' stroke-width='2'/%3E%3Ccircle cx='180' cy='960' r='90' stroke='%234aabea' stroke-opacity='0.2' stroke-width='1'/%3E%3Ccircle cx='180' cy='960' r='34' stroke='%234aabea' stroke-opacity='0.3' stroke-width='1.5'/%3E%3Ccircle cx='180' cy='960' r='150' stroke='%234aabea' stroke-opacity='0.12' stroke-width='1' stroke-dasharray='4 8'/%3E%3Cpath d='M180 780 180 1140 M-60 960 420 960' stroke='%234aabea' stroke-opacity='0.12' stroke-width='1'/%3E%3Cpath d='M1700 780 1840 850 1840 990 1700 1060 1560 990 1560 850z' stroke='%234aabea' stroke-opacity='0.35' stroke-width='2'/%3E%3Ccircle cx='1700' cy='920' r='70' stroke='%234aabea' stroke-opacity='0.2' stroke-width='1'/%3E%3Ccircle cx='1700' cy='920' r='24' stroke='%234aabea' stroke-opacity='0.3' stroke-width='1.2'/%3E%3Cpath d='M1000 520 1060 550 1060 610 1000 640 940 610 940 550z' stroke='%234aabea' stroke-opacity='0.2' stroke-width='1.2'/%3E%3Ccircle cx='1000' cy='580' r='14' stroke='%234aabea' stroke-opacity='0.25' stroke-width='1'/%3E%3Cpath d='M120 330 180 780 M-20 130 940 550 M1000 640 1560 850 M1620 230 1840 700' stroke='%234aabea' stroke-opacity='0.15' stroke-width='1' stroke-dasharray='6 8'/%3E%3C/g%3E%3Cg stroke='%234aabea' stroke-opacity='0.25' stroke-width='1.5'%3E%3Cline x1='60' y1='200' x2='60' y2='900' stroke-dasharray='10 18'/%3E%3Cline x1='30' y1='240' x2='90' y2='240'/%3E%3Cline x1='30' y1='420' x2='90' y2='420'/%3E%3Cline x1='30' y1='600' x2='90' y2='600'/%3E%3Cline x1='30' y1='780' x2='90' y2='780'/%3E%3Cline x1='1880' y1='200' x2='1880' y2='860' stroke-dasharray='10 18'/%3E%3Cline x1='1850' y1='300' x2='1910' y2='300'/%3E%3Cline x1='1850' y1='500' x2='1910' y2='500'/%3E%3Cline x1='1850' y1='700' x2='1910' y2='700'/%3E%3C/g%3E%3Cg stroke='%23ffd802' stroke-opacity='0.35' stroke-width='3'%3E%3Cpolyline points='1300,60 1400,60 1430,90 1430,30'/%3E%3Cpolyline points='1470,60 1570,60 1600,90 1600,30'/%3E%3Cpolyline points='1640,60 1740,60 1770,90 1770,30'/%3E%3Cpolyline points='1810,60 1910,60 1940,90 1940,30'/%3E%3C/g%3E%3Cg fill='%234aabea'%3E%3Ctext x='1620' y='360' font-family='sans-serif' font-size='30' letter-spacing='10' fill-opacity='0.35'%3ER.I.C.%3C/text%3E%3Ctext x='-20' y='400' font-family='sans-serif' font-size='22' letter-spacing='8' fill-opacity='0.3'%3ETERMINAL-01%3C/text%3E%3Ctext x='1560' y='1110' font-family='sans-serif' font-size='22' letter-spacing='8' fill-opacity='0.3'%3ERAINCRAT-01%3C/text%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 全屏细扫描线纹理（CRT 屏幕质感，极淡，不挡交互） */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.028) 0 1px, transparent 1px 3px);
+}
+
+.dark body::after {
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 3px);
+}
+
+/* 导航栏底部黄黑警示斜纹分隔条（方舟危险区标识，向右流动）。
+ * -45deg 条纹的水平重复周期 = 16px / cos(45°) ≈ 22.63px，按该位移循环即可无缝衔接。 */
+.VPNavBar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: repeating-linear-gradient(-45deg, var(--ak-yellow) 0 8px, #000 8px 16px);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: ak-hazard-scroll 0.9s linear infinite;
+}
+
+@keyframes ak-hazard-scroll {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 22.63px 0;
+  }
+}
+
+/* 导航站名后缀：ARKNS 终端编号风格 */
+.VPNavBarTitle .title::after {
+  content: " // RAINCRAT";
+  font-family: var(--ak-font-sans);
+  font-size: 0.62em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--ak-advanced);
+  opacity: 0.85;
+  margin-left: 0.35em;
+}
+
+/* ============================ C. 交互动效 ============================ */
+
+/* 按钮光带扫过（方舟按钮 hover：斜向亮带从左扫到右） */
+.VPButton {
+  overflow: hidden;
+}
+
+.VPButton::before {
+  content: "";
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: -45%;
+  width: 35%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-22deg);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.VPButton:hover::before {
+  left: 115%;
+}
+
+/* 特性卡顶部蓝条：hover 时横向展开（材料合成动画感） */
+.VPFeature::before {
+  transition: width 0.25s ease;
+}
+
+.VPFeature:hover::before {
+  width: 100%;
+}
+
+/* ============================ D. 焦点状态差异化（全 primary 色系） ============================ */
+
+/* 全局键盘焦点环：primary 描边（替代浏览器默认蓝） */
+:focus-visible {
+  outline: 2px solid var(--ak-primary);
+  outline-offset: 2px;
+}
+
+/* 文档内链接 hover：primary 变色 + 下划线加深 */
+.vp-doc a:hover {
+  color: var(--ak-primary) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--ak-primary);
+}
+
+/* 文档表格行 hover：primary 淡底（区别于斑马纹） */
+.vp-doc tbody tr:hover {
+  background-color: var(--vp-c-brand-dimm) !important;
+}
+
+/* 文档表格表头 hover：primary 辉光 */
+.vp-doc th:hover {
+  box-shadow: inset 0 0 0 2px var(--ak-primary);
+}
+
+/* 引用块 hover：左边线加亮 + primary 辉光 */
+.vp-doc blockquote:hover {
+  border-left-color: var(--ak-primary);
+  box-shadow: 0 0 12px var(--vp-c-shadow-brand);
+}
+
+/* 行内代码 hover：primary 描边 */
+.vp-doc :not(pre)>code:hover {
+  box-shadow: 0 0 0 1px var(--ak-primary), 0 0 8px var(--vp-c-shadow-brand);
+}
+
+/* 文档标题装饰条 hover：primary 辉光增强 */
+.vp-doc h2:hover::before,
+.vp-doc h3:hover::before {
+  filter: drop-shadow(0 0 4px var(--vp-c-shadow-brand-strong));
+}
+
+/* 侧边栏分组标题 hover：primary 变色 */
+.VPSidebarItem.level-0>.item:hover .text {
+  color: var(--ak-primary);
+}
+
+/* 导航社交图标 hover：primary 辉光 */
+.VPNavBarSocialLink:hover {
+  color: var(--ak-primary) !important;
+}
+
+/* 文档返回顶部按钮 hover：primary 辉光 */
+.VPBackToTop:hover {
+  border-color: var(--ak-primary) !important;
+  box-shadow: 0 0 12px var(--vp-c-shadow-brand) !important;
 }
