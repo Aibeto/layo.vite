@@ -30,7 +30,7 @@ features:
       点击前往萌国ICP备案查询
     link: https://icp.gov.moe/?keyword=20260812
   - title: 开放源代码许可
-    details: 本站参考或直接使用了一些开放源代码的项目
+    details: 本站参考或直接使用了一些开放源代码的项目<br />点击查看开放源代码许可
     link: /docs/tpn.md
   # - title: IP
     # details: 洛天依 初音未来

@@ -39,6 +39,8 @@ export default defineConfig({
     // 全站静态 SEO meta（值统一取自 seo-config.js）
     ['meta', { name: 'robots', content: seo.robotsContent }],
     ['meta', { name: 'author', content: seo.author }],
+    ['meta', { name: 'msvalidate.01', content: '7B9A933C4A86E3C340BDB8B569FD3975' }],
+    ['meta', { name: 'baidu-site-verification', content: 'codeva-6hHqKmy9Ib' }],
     ['meta', { property: 'og:site_name', content: seo.siteName }],
     ['meta', { property: 'og:locale', content: seo.ogLocale }],
     ['meta', { name: 'twitter:card', content: seo.twitterCard }],
