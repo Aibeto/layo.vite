@@ -157,8 +157,11 @@ async function readPageTitle(srcDir, page) {
   try {
     const file = await readFile(join(srcDir, page), 'utf-8');
     const fm = file.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? '';
-    const m = fm.match(/^title:\s*["']?([^"'\n]+?)["']?\s*$/m);
-    return m?.[1]?.trim() ?? null;
+    // 兼容单行 title 与 YAML 块标量（| / |- / |+）多行标题；块标量内部换行归为空格
+    const m =
+      fm.match(/^title:\s*["']?([^"'\n]+?)["']?\s*$/m) ??
+      fm.match(/^title:\s*\|[-+]?\s*\n((?:[ \t]+.*\n?)+)/m);
+    return m?.[1]?.replace(/\s*\n\s*/g, ' ').trim() ?? null;
   } catch {
     return null;
   }

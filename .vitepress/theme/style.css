@@ -322,6 +322,8 @@ html .vpb-page-title {
   font-family: var(--ak-font-sans);
   letter-spacing: -0.01em;
   color: var(--vp-c-text-1);
+  /* 多行标题（frontmatter title 用 YAML 块标量换行）在此处真实换行显示 */
+  white-space: pre-line;
 }
 
 /* 文本选中：ak 深蓝底白字（方舟界面风格） */
